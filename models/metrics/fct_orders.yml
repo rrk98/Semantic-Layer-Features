@@ -213,3 +213,20 @@ metrics:
     type_params:
       measure: order_total
       grain_to_date: month
+
+saved_queries:
+  - name: order_metrics
+    description: Relevant order metrics
+    query_params:
+      metrics:
+        - large_order
+        - food_order_amount
+        - order_total
+      group_by:
+        - Entity('order_id')
+        - TimeDimension('order_id__ordered_at', 'day')
+        - Dimension('customer__customer_name')
+    exports:
+      - name: order_metrics
+        config:
+          export_as: table
